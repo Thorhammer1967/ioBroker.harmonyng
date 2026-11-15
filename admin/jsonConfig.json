@@ -1,0 +1,33 @@
+{
+  "_type": "panel",
+  "i18n": true,
+  "items": {
+    "host": {
+      "type": "text",
+      "label": "Hub IP address",
+      "sm": 12, "md": 6, "lg": 4
+    },
+    "port": {
+      "type": "number",
+      "label": "API port",
+      "default": 8089,
+      "sm": 12, "md": 3, "lg": 2
+    },
+    "pollInterval": {
+      "type": "number",
+      "label": "Poll interval (seconds)",
+      "default": 30,
+      "sm": 12, "md": 3, "lg": 2
+    },
+    "useWs": {
+      "type": "checkbox",
+      "label": "Use WebSocket for live updates",
+      "default": true,
+      "sm": 12, "md": 6, "lg": 4
+    },
+    "hint": {
+      "type": "staticText",
+      "text": "Requires a Logitech Harmony Hub rooted with harmony-ng (https://github.com/iranl/harmony-ng, MIT). The hub serves its API on port 8089, e.g. http://192.168.178.195:8089"
+    }
+  }
+}

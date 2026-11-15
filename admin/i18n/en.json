@@ -1,0 +1,6 @@
+{
+  "Hub IP address": "Hub IP address",
+  "API port": "API port",
+  "Poll interval (seconds)": "Poll interval (seconds)",
+  "Use WebSocket for live updates": "Use WebSocket for live updates"
+}

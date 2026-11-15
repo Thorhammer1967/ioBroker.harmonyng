@@ -1,0 +1,111 @@
+{
+  "common": {
+    "name": "harmonyng",
+    "version": "0.1.0",
+    "news": {
+      "0.1.0": {
+        "en": "Initial release: connect to harmony-ng hub, control activities and send IR commands",
+        "de": "Erstveröffentlichung: Verbindung zu harmony-ng Hub, Aktivitäten steuern und IR-Befehle senden"
+      }
+    },
+    "title": "HarmonyNG (Logitech Harmony Hub)",
+    "titleLang": {
+      "en": "HarmonyNG (Logitech Harmony Hub)",
+      "de": "HarmonyNG (Logitech Harmony Hub)"
+    },
+    "desc": {
+      "en": "Controls a Logitech Harmony Hub running harmony-ng firmware via its local REST/WebSocket API (port 8089). Start/stop activities and send device commands from ioBroker.",
+      "de": "Steuert einen Logitech Harmony Hub mit harmony-ng Firmware über die lokale REST/WebSocket-API (Port 8089). Aktivitäten starten/stoppen und Gerätebefehle aus ioBroker senden."
+    },
+    "platform": "Javascript/Node.js",
+    "mode": "daemon",
+    "icon": "harmonyng.png",
+    "enabled": true,
+    "extIcon": "https://raw.githubusercontent.com/Thorhammer1967/ioBroker.harmonyng/main/admin/harmonyng.png",
+    "keywords": ["harmony", "harmony-ng", "logitech", "remote", "ir", "av"],
+    "readme": "https://github.com/Thorhammer1967/ioBroker.harmonyng/blob/main/README.md",
+    "loglevel": "info",
+    "type": "hardware",
+    "adminUI": {
+      "config": "json"
+    },
+    "supportedMessages": {
+      "custom": true
+    },
+    "docs": {
+      "en": "https://github.com/Thorhammer1967/ioBroker.harmonyng/blob/main/README.md",
+      "de": "https://github.com/Thorhammer1967/ioBroker.harmonyng/blob/main/README.md"
+    },
+    "authors": ["Jörg <Thorhammer1967@github>"],
+    "licenseInformation": {
+      "type": "free",
+      "license": "MIT"
+    }
+  },
+  "native": {
+    "host": "192.168.178.195",
+    "port": 8089,
+    "pollInterval": 30,
+    "useWs": true
+  },
+  "objects": [],
+  "instanceObjects": [
+    {
+      "_id": "info",
+      "type": "channel",
+      "common": { "name": "Information" },
+      "native": {}
+    },
+    {
+      "_id": "info.connection",
+      "type": "state",
+      "common": {
+        "name": "Hub connected",
+        "type": "boolean",
+        "role": "indicator.connected",
+        "read": true,
+        "write": false,
+        "def": false
+      },
+      "native": {}
+    },
+    {
+      "_id": "info.version",
+      "type": "state",
+      "common": {
+        "name": "harmony-ng version",
+        "type": "string",
+        "role": "info",
+        "read": true,
+        "write": false,
+        "def": ""
+      },
+      "native": {}
+    },
+    {
+      "_id": "info.currentActivity",
+      "type": "state",
+      "common": {
+        "name": "Current activity",
+        "type": "string",
+        "role": "info",
+        "read": true,
+        "write": false,
+        "def": ""
+      },
+      "native": {}
+    },
+    {
+      "_id": "activities",
+      "type": "channel",
+      "common": { "name": "Activities" },
+      "native": {}
+    },
+    {
+      "_id": "devices",
+      "type": "channel",
+      "common": { "name": "Devices" },
+      "native": {}
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "name": "iobroker.harmonyng",
+  "version": "0.1.0",
+  "description": "ioBroker adapter for Logitech Harmony Hub running harmony-ng (REST/WebSocket API on port 8089)",
+  "author": "Jörg <Thorhammer1967@github>",
+  "homepage": "https://github.com/Thorhammer1967/ioBroker.harmonyng",
+  "license": "MIT",
+  "keywords": [
+    "iobroker",
+    "harmony",
+    "harmony-ng",
+    "logitech",
+    "remote",
+    "ir",
+    "smarthome"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Thorhammer1967/ioBroker.harmonyng.git"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "main": "main.js",
+  "dependencies": {
+    "@iobroker/adapter-core": "^3.4.3",
+    "ws": "^8.23.0"
+  },
+  "devDependencies": {
+    "@iobroker/eslint-config": "^2.1.0"
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "test": "node node_modules/iobroker.js-controller/test/testAdapter.js --start-again"
+  }
+}
