@@ -3,6 +3,21 @@
 const utils = require("@iobroker/adapter-core");
 const HarmonyNgClient = require("./lib/harmonyng-api");
 
+function infoState(name, type, def) {
+    return {
+        type: "state",
+        common: {
+            name,
+            type: type || "string",
+            role: "info",
+            read: true,
+            write: false,
+            def: def !== undefined ? def : "",
+        },
+        native: {},
+    };
+}
+
 class HarmonyNg extends utils.Adapter {
     constructor(options) {
         super({
@@ -48,6 +63,14 @@ class HarmonyNg extends utils.Adapter {
             if (status.status === 200 && status.data && status.data.ok) {
                 await this.setStateAsync("info.connection", true, true);
                 await this.setStateAsync("info.version", `${status.data.version} (fw ${status.data.firmware})`, true);
+                await this.setObjectNotExistsAsync("info.hubName", infoState("Hub name", "string", status.data.hub_name));
+                await this.setObjectNotExistsAsync("info.firmware", infoState("Firmware", "string", status.data.firmware));
+                await this.setObjectNotExistsAsync("info.hubId", infoState("Hub ID", "string", status.data.hub_id));
+                await this.setObjectNotExistsAsync("info.service", infoState("Service", "string", `harmony-ng v${status.data.version}`));
+                await this.setStateAsync("info.hubName", status.data.hub_name || "", true);
+                await this.setStateAsync("info.firmware", status.data.firmware || "", true);
+                await this.setStateAsync("info.hubId", status.data.hub_id || "", true);
+                await this.setStateAsync("info.service", `harmony-ng v${status.data.version}`, true);
             } else {
                 await this.setStateAsync("info.connection", false, true);
             }
@@ -138,6 +161,36 @@ class HarmonyNg extends utils.Adapter {
                     },
                     native: { deviceId: String(dev.id) },
                 });
+                // full device details as info states
+                await this.setObjectNotExistsAsync(`devices.${id}.manufacturer`, infoState("Manufacturer", "string", dev.manufacturer));
+                await this.setObjectNotExistsAsync(`devices.${id}.model`, infoState("Model", "string", dev.model));
+                await this.setObjectNotExistsAsync(`devices.${id}.type`, infoState("Type", "string", dev.type));
+                await this.setStateAsync(`devices.${id}.manufacturer`, dev.manufacturer || "", true);
+                await this.setStateAsync(`devices.${id}.model`, dev.model || "", true);
+                await this.setStateAsync(`devices.${id}.type`, dev.type || "", true);
+
+                // full command list as JSON state for reference/automation
+                try {
+                    const cmdsRes = await this.client.getDeviceCommands(String(dev.id));
+                    if (cmdsRes.status === 200 && cmdsRes.data && Array.isArray(cmdsRes.data.commands)) {
+                        const names = cmdsRes.data.commands.map((c) => c.name).filter(Boolean);
+                        await this.setObjectNotExistsAsync(`devices.${id}.commandList`, {
+                            type: "state",
+                            common: {
+                                name: "Available commands (JSON)",
+                                type: "string",
+                                role: "json",
+                                read: true,
+                                write: false,
+                                def: "[]",
+                            },
+                            native: { deviceId: String(dev.id) },
+                        });
+                        await this.setStateAsync(`devices.${id}.commandList`, JSON.stringify(names), true);
+                    }
+                } catch (e) {
+                    this.log.debug(`commandList failed for device ${dev.id}: ${e.message}`);
+                }
             }
         } catch (e) {
             this.log.warn(`devices failed: ${e.message}`);
