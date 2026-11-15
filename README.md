@@ -12,8 +12,9 @@ The adapter talks to the hub's local REST + WebSocket API on **port 8089** — n
 - Live updates via WebSocket (`/websocket`), polling fallback
 
 ## Setup
-1. Root your Harmony Hub with harmony-ng (`tools/root_hub_usb.py` + `deploy_hub.py` from the harmony-ng releases).
-2. Install this adapter in ioBroker Admin.
+1. **Root your Harmony Hub with harmony-ng** — see [docs/ROOTING.md](docs/ROOTING.md).
+   The rooting tools (`tools/root_hub_usb.py`, `tools/deploy_hub.py`) ship with this repo.
+2. Install this adapter in ioBroker Admin (from GitHub URL or local tgz).
 3. Enter the hub IP (default port 8089).
 4. Activities and devices appear automatically as states.
 
@@ -26,4 +27,4 @@ The adapter talks to the hub's local REST + WebSocket API on **port 8089** — n
 `GET /api/status`, `GET /api/activities`, `GET /api/devices`, `GET /api/activity`, `GET /api/device-commands?id=`, `POST /api/activity-start`, `POST /api/activity-stop`, `POST /api/ir-send`, `WS /websocket`
 
 ## License
-MIT. Uses the REST API of harmony-ng (MIT, © 2026 iranl and contributors) — see https://github.com/iranl/harmony-ng/issues/221
+MIT. Uses the REST API and rooting tools of harmony-ng (MIT, © 2026 iranl and contributors) — see https://github.com/iranl/harmony-ng/issues/221
